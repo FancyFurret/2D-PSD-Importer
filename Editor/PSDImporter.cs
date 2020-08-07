@@ -142,6 +142,9 @@ namespace UnityEditor.U2D.PSD
 
         [SerializeField]
         bool m_KeepDupilcateSpriteName = false;
+        
+        [SerializeField]
+        bool m_SpriteSheetMode = false;
 
         [SerializeField]
         SpriteCategoryList m_SpriteCategoryList = new SpriteCategoryList() {categories = new List<SpriteCategory>()};
@@ -457,7 +460,10 @@ namespace UnityEditor.U2D.PSD
                 int width, height;
                 int padding = 4;
                 Vector2Int[] uvTransform;
-                ImagePacker.Pack(layerBuffers.ToArray(), doc.width, doc.height, padding, out output, out width, out height, out spritedata, out uvTransform);
+                if (m_SpriteSheetMode)
+                    SpriteSheetSpritePacker.Pack(layerBuffers.ToArray(), doc.width, doc.height, padding, out output, out width, out height, out spritedata, out uvTransform);
+                else
+                    ImagePacker.Pack(layerBuffers.ToArray(), doc.width, doc.height, padding, out output, out width, out height, out spritedata, out uvTransform);
                 var spriteImportData = GetSpriteImportData();
                 if (spriteImportData.Count <= 0 || shouldResliceFromLayer)
                 {

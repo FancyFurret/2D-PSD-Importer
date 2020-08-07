@@ -53,6 +53,7 @@ namespace UnityEditor.U2D.PSD
         SerializedProperty m_GenerateGOHierarchy;
         SerializedProperty m_PaperDollMode;
         SerializedProperty m_KeepDupilcateSpriteName;
+        SerializedProperty m_SpriteSheetMode;
 
         readonly int[] m_FilterModeOptions = (int[])(Enum.GetValues(typeof(FilterMode)));
 
@@ -81,6 +82,7 @@ namespace UnityEditor.U2D.PSD
             m_GenerateGOHierarchy = serializedObject.FindProperty("m_GenerateGOHierarchy");
             m_PaperDollMode = serializedObject.FindProperty("m_PaperDollMode");
             m_KeepDupilcateSpriteName = serializedObject.FindProperty("m_KeepDupilcateSpriteName");
+            m_SpriteSheetMode = serializedObject.FindProperty("m_SpriteSheetMode");
 
             var textureImporterSettingsSP = serializedObject.FindProperty("m_TextureImporterSettings");
             m_TextureType = textureImporterSettingsSP.FindPropertyRelative("m_TextureType");
@@ -612,6 +614,7 @@ namespace UnityEditor.U2D.PSD
             if (m_SpriteMode.intValue == (int)SpriteImportMode.Multiple && !m_SpriteMode.hasMultipleDifferentValues)
             {
                 EditorGUILayout.PropertyField(m_MosaicLayers, s_Styles.mosaicLayers);
+                EditorGUILayout.PropertyField(m_SpriteSheetMode, s_Styles.spriteSheetMode);
                 using (new EditorGUI.DisabledScope(!m_MosaicLayers.boolValue))
                 {
                     EditorGUILayout.PropertyField(m_CharacterMode, s_Styles.characterMode);
@@ -953,6 +956,7 @@ namespace UnityEditor.U2D.PSD
 
             public readonly GUIContent importHiddenLayer = new GUIContent(L10n.Tr("Import Hidden"), L10n.Tr("Import hidden layers"));
             public readonly GUIContent mosaicLayers = new GUIContent(L10n.Tr("Mosaic"), L10n.Tr("Layers will be imported as individual Sprites"));
+            public readonly GUIContent spriteSheetMode = new GUIContent(L10n.Tr("Sprite Sheet Mode"), L10n.Tr("All generated sprites will be the same size as the original layer"));
             public readonly GUIContent characterMode = new GUIContent(L10n.Tr("Character Rig"), L10n.Tr("Enable to support 2D Animation character rigging"));
             public readonly GUIContent generateGOHierarchy = new GUIContent(L10n.Tr("Use Layer Grouping"), L10n.Tr("GameObjects are grouped according to source file layer grouping"));
             public readonly GUIContent resliceFromLayer = new GUIContent(L10n.Tr("Reslice"), L10n.Tr("Recreate Sprite rects from file"));
